@@ -110,9 +110,9 @@ livestream-app/
 
 **Documentation**
 
-- [**API Documentation**](./documentation/API_DOCUMENTATION.md) - Complete API reference
+- [**API Documentation**](https://github.com/mdadeebahmed/livestream-app/blob/main/documentation/API_documentation.md) - Complete API reference
 
-- [**User Guide**](./documentation/USER_DOCUMENTATION.md) - Setup and usage instructions
+- [**User Guide**](https://github.com/mdadeebahmed/livestream-app/blob/main/documentation/USER_documentation.md) - Setup and usage instructions
 
 **Troubleshooting**
 
