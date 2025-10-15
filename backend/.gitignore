@@ -1,0 +1,18 @@
+# Virtual environment
+venv/
+env/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+.env
+.env.local
+.env.production
+
+# MongoDB
+*.mongodb
+/data/
+
+# Logs
+*.log

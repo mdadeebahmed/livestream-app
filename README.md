@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🎥 Livestream App with Overlay Management
 
 A full-stack web application for streaming video content with customizable overlays. Built with React frontend, Flask backend, and MongoDB database.
@@ -152,3 +153,6 @@ livestream-app/
   This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 Happy Streaming! 
+=======
+# livestream-app
+>>>>>>> b3ab492e9a46d9ebd20f0b0162eb9c643f97cf8e
