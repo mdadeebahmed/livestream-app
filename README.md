@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🎥 Livestream App with Overlay Management
 
 A full-stack web application for streaming video content with customizable overlays. Built with React frontend, Flask backend, and MongoDB database.
