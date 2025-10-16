@@ -1,15 +1,39 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Draggable from 'react-draggable';
 
+// Browser-compatible test streams
+const testStreams = [
+  {
+    name: "Big Buck Bunny (MP4)",
+    url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    type: "mp4",
+    description: "High quality animation - Works in all browsers"
+  },
+  {
+    name: "Live HLS Stream", 
+    url: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+    type: "hls",
+    description: "Live HLS stream - Modern browsers only"
+  },
+  {
+    name: "Elephants Dream (MP4)",
+    url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    type: "mp4", 
+    description: "Open movie - Universal browser support"
+  }
+];
+
 const StreamPlayer = ({ rtspUrl, overlays, streamName }) => {
   const videoRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(1);
+  const [selectedTestStream, setSelectedTestStream] = useState('');
 
+  // Auto-select first test stream if no RTSP provided
   useEffect(() => {
-    // In production, you would integrate with a proper RTSP player
-    // This is a placeholder for video functionality
-    console.log('Stream URL:', rtspUrl);
+    if (!rtspUrl && testStreams.length > 0) {
+      setSelectedTestStream(testStreams[0].url);
+    }
   }, [rtspUrl]);
 
   const handlePlay = () => {
@@ -18,7 +42,10 @@ const StreamPlayer = ({ rtspUrl, overlays, streamName }) => {
         setIsPlaying(true);
       }).catch(error => {
         console.error('Error playing video:', error);
-        alert('Error playing video. This demo uses a placeholder. In production, RTSP streams would be converted for browser compatibility.');
+        // Show helpful message for RTSP streams
+        if (rtspUrl && rtspUrl.startsWith('rtsp://')) {
+          alert('RTSP streams require conversion for browser compatibility. Please use one of the test streams below.');
+        }
       });
     }
   };
@@ -38,6 +65,8 @@ const StreamPlayer = ({ rtspUrl, overlays, streamName }) => {
     }
   };
 
+  const currentStreamUrl = selectedTestStream || rtspUrl;
+
   return (
     <div className="stream-player">
       <div className="stream-header">
@@ -46,14 +75,13 @@ const StreamPlayer = ({ rtspUrl, overlays, streamName }) => {
       </div>
       
       <div className="video-container">
-        {/* Placeholder video element - in production, use RTSP-compatible player */}
         <video
           ref={videoRef}
           className="video-element"
-          poster="https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80"
           controls={false}
+          key={currentStreamUrl} // Force re-render on stream change
         >
-          <source src="" type="video/mp4" />
+          <source src={currentStreamUrl} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
 
@@ -91,7 +119,6 @@ const StreamPlayer = ({ rtspUrl, overlays, streamName }) => {
                   }}
                   onError={(e) => {
                     e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'block';
                   }}
                 />
               )}
@@ -119,9 +146,27 @@ const StreamPlayer = ({ rtspUrl, overlays, streamName }) => {
           />
           <span>{Math.round(volume * 100)}%</span>
         </div>
-        <div className="stream-info">
-          <small>RTSP: {rtspUrl.substring(0, 30)}...</small>
+      </div>
+
+      {/* Test Stream Selector */}
+      <div className="test-streams-section">
+        <h4>🎯 Test Streams (Browser Compatible)</h4>
+        <div className="stream-buttons">
+          {testStreams.map((stream, index) => (
+            <button
+              key={index}
+              className={`stream-btn ${selectedTestStream === stream.url ? 'active' : ''}`}
+              onClick={() => setSelectedTestStream(stream.url)}
+            >
+              {stream.name}
+            </button>
+          ))}
         </div>
+        {selectedTestStream && (
+          <p className="stream-info">
+            Now playing: {testStreams.find(s => s.url === selectedTestStream)?.description}
+          </p>
+        )}
       </div>
     </div>
   );
