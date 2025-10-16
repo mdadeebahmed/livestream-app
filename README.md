@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # 🎥 Livestream App with Overlay Management
 
 A full-stack web application for streaming video content with customizable overlays. Built with React frontend, Flask backend, and MongoDB database.
@@ -111,9 +110,9 @@ livestream-app/
 
 **Documentation**
 
-- [**API Documentation**](./documentation/API_DOCUMENTATION.md) - Complete API reference
+- [**API Documentation**](https://github.com/mdadeebahmed/livestream-app/blob/main/documentation/API_documentation.md) - Complete API reference
 
-- [**User Guide**](./documentation/USER_DOCUMENTATION.md) - Setup and usage instructions
+- [**User Guide**](https://github.com/mdadeebahmed/livestream-app/blob/main/documentation/USER_documentation.md) - Setup and usage instructions
 
 **Troubleshooting**
 
@@ -155,4 +154,3 @@ livestream-app/
 Happy Streaming! 
 =======
 # livestream-app
->>>>>>> b3ab492e9a46d9ebd20f0b0162eb9c643f97cf8e
