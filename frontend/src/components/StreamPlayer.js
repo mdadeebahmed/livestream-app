@@ -102,8 +102,9 @@ const StreamPlayer = ({ rtspUrl, overlays, streamName }) => {
               {overlay.type === 'text' && (
                 <span style={{ 
                   fontSize: 'inherit', 
-                  color: 'inherit',
-                  fontWeight: 'bold'
+                  color: overlay.color || '#000000', // NEW: Use the color
+                  fontWeight: 'bold',
+                  textShadow: overlay.color === '#000000' ? '0 0 2px white' : '0 0 2px black' // Better visibility
                 }}>
                   {overlay.content}
                 </span>

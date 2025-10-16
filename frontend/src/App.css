@@ -611,3 +611,55 @@ body {
 .example-urls li:last-child {
   border-bottom: none;
 }
+
+/* Color Picker Styles */
+.color-picker-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.color-picker {
+  width: 60px;
+  height: 40px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.color-value {
+  font-family: monospace;
+  font-size: 0.9rem;
+  color: #4a5568;
+  background: #f7fafc;
+  padding: 0.5rem;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.color-presets {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.color-preset {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.color-preset:hover {
+  transform: scale(1.1);
+  border-color: #667eea;
+}
+
+.color-preset.active {
+  border-color: #667eea;
+  transform: scale(1.1);
+}

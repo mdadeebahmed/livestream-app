@@ -126,6 +126,7 @@ def create_overlay():
             'name': data['name'],
             'type': data['type'],
             'content': data['content'],
+            'color': data.get('color', '#000000'),  # NEW: Include color with default
             'position': data['position'],
             'size': data['size'],
             'created_at': datetime.utcnow(),

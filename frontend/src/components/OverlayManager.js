@@ -10,6 +10,7 @@ const OverlayManager = ({ overlays, onOverlayUpdate }) => {
     name: '',
     type: 'text',
     content: '',
+    color: '#000000', // NEW: Default text color
     position: { x: 50, y: 50 },
     size: { width: '150px', height: '40px' }
   });
@@ -59,6 +60,7 @@ const OverlayManager = ({ overlays, onOverlayUpdate }) => {
       name: '',
       type: 'text',
       content: '',
+      color: '#000000', // NEW: Reset to default color
       position: { x: 50, y: 50 },
       size: { width: '150px', height: '40px' }
     });
@@ -78,85 +80,112 @@ const OverlayManager = ({ overlays, onOverlayUpdate }) => {
       {showForm && (
         <div className="overlay-form">
           <h4>{editingOverlay ? '✏️ Edit' : '➕ Add'} Overlay</h4>
-          <form onSubmit={handleSubmit}>
-            <div className="form-group">
-              <label>Name:</label>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Name:</label>
+            <input
+              type="text"
+              value={formData.name}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+              placeholder="Enter overlay name"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Type:</label>
+            <select
+              value={formData.type}
+              onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+            >
+              <option value="text">Text</option>
+              <option value="logo">Logo</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label>
+              {formData.type === 'text' ? 'Text Content:' : 'Logo URL:'}
+            </label>
+            {formData.type === 'text' ? (
               <input
                 type="text"
-                value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="Enter overlay name"
+                value={formData.content}
+                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                placeholder="Enter text to display"
                 required
               />
-            </div>
+            ) : (
+              <input
+                type="url"
+                placeholder="https://example.com/logo.png"
+                value={formData.content}
+                onChange={(e) => setFormData({ ...formData, content: e.target.value })}
+                required
+              />
+            )}
+          </div>
 
+          {/* NEW: Color Picker for Text Overlays */}
+          {formData.type === 'text' && (
             <div className="form-group">
-              <label>Type:</label>
-              <select
-                value={formData.type}
-                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-              >
-                <option value="text">Text</option>
-                <option value="logo">Logo</option>
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>
-                {formData.type === 'text' ? 'Text Content:' : 'Logo URL:'}
-              </label>
-              {formData.type === 'text' ? (
+              <label>Text Color:</label>
+              <div className="color-picker-container">
                 <input
-                  type="text"
-                  value={formData.content}
-                  onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  placeholder="Enter text to display"
-                  required
+                  type="color"
+                  value={formData.color || '#000000'}
+                  onChange={(e) => setFormData({ ...formData, color: e.target.value })}
+                  className="color-picker"
                 />
-              ) : (
-                <input
-                  type="url"
-                  placeholder="https://example.com/logo.png"
-                  value={formData.content}
-                  onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                  required
-                />
-              )}
-            </div>
-
-            <div className="form-group">
-              <label>Size:</label>
-              <div className="size-inputs">
-                <input
-                  type="text"
-                  placeholder="Width (e.g., 150px)"
-                  value={formData.size.width}
-                  onChange={(e) => setFormData({ 
-                    ...formData, 
-                    size: { ...formData.size, width: e.target.value }
-                  })}
-                />
-                <input
-                  type="text"
-                  placeholder="Height (e.g., 40px)"
-                  value={formData.size.height}
-                  onChange={(e) => setFormData({ 
-                    ...formData, 
-                    size: { ...formData.size, height: e.target.value }
-                  })}
-                />
+                <span className="color-value">{formData.color || '#000000'}</span>
+                <div className="color-presets">
+                  {['#000000', '#FFFFFF', '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF'].map(color => (
+                    <button
+                      key={color}
+                      type="button"
+                      className="color-preset"
+                      style={{ backgroundColor: color }}
+                      onClick={() => setFormData({ ...formData, color })}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
+          )}
 
-            <div className="form-actions">
-              <button type="submit" className="save-btn">
-                {editingOverlay ? 'Update' : 'Create'} Overlay
-              </button>
-              <button type="button" onClick={resetForm} className="cancel-btn">
-                Cancel
-              </button>
+          <div className="form-group">
+            <label>Size:</label>
+            <div className="size-inputs">
+              <input
+                type="text"
+                placeholder="Width (e.g., 150px)"
+                value={formData.size.width}
+                onChange={(e) => setFormData({ 
+                  ...formData, 
+                  size: { ...formData.size, width: e.target.value }
+                })}
+              />
+              <input
+                type="text"
+                placeholder="Height (e.g., 40px)"
+                value={formData.size.height}
+                onChange={(e) => setFormData({ 
+                  ...formData, 
+                  size: { ...formData.size, height: e.target.value }
+                })}
+              />
             </div>
-          </form>
+          </div>
+
+          <div className="form-actions">
+            <button type="submit" className="save-btn">
+              {editingOverlay ? 'Update' : 'Create'} Overlay
+            </button>
+            <button type="button" onClick={resetForm} className="cancel-btn">
+              Cancel
+            </button>
+          </div>
+        </form>
         </div>
       )}
 
